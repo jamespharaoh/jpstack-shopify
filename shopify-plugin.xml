@@ -1,0 +1,70 @@
+<plugin
+	name="shopify"
+	package="wbs.integrations.shopify">
+
+	<plugin-dependencies>
+
+		<plugin-dependency name="platform-scaffold"/>
+
+	</plugin-dependencies>
+
+	<models>
+
+		<model name="shopifyAccount"/>
+		<model name="shopifyEvent"/>
+		<model name="shopifyEventSubject"/>
+		<model name="shopifyProduct"/>
+
+	</models>
+
+	<sql-scripts>
+
+		<sql-schema name="shopify"/>
+
+	</sql-scripts>
+
+	<layer name="daemon">
+
+		<component class="daemon.ShopifyAccountEventPollObjectDaemonHelper"/>
+		<component class="daemon.ShopifyAccountEventSubjectProcessObjectDaemonHelper"/>
+
+	</layer>
+
+	<layer name="fixture">
+
+		<component class="fixture.ShopifySynchronisationFixtureBuilder"/>
+
+	</layer>
+
+	<layer name="logic">
+
+		<component class="apiclient.ShopifyApiLogicImplementation"/>
+		<component class="apiclient.ShopifyHttpSenderHelper"/>
+		<component class="apiclient.collect.ShopifyCollectApiClientImplementation"/>
+		<component class="apiclient.customcollection.ShopifyCustomCollectionApiClientImplementation"/>
+		<component class="apiclient.event.ShopifyEventApiClientImplementation"/>
+		<component class="apiclient.metafield.ShopifyMetafieldApiClientImplementation"/>
+		<component class="apiclient.product.ShopifyProductApiClientImplementation"/>
+
+	</layer>
+
+	<layer name="model-meta">
+
+		<component class="metamodel.ShopifySynchronisationSpec"/>
+
+	</layer>
+
+	<fixtures>
+
+		<fixture name="shopify"/>
+
+	</fixtures>
+
+	<console-modules>
+
+		<console-module name="shopify-account"/>
+		<console-module name="shopify-product"/>
+
+	</console-modules>
+
+</plugin>
