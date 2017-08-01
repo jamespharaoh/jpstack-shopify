@@ -1,0 +1,7 @@
+<console-module
+	name="shopify-event">
+
+	<console-helper-provider
+		object-name="shopifyEvent"/>
+
+</console-module>

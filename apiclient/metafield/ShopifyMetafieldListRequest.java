@@ -1,6 +1,8 @@
 package wbs.integrations.shopify.apiclient.metafield;
 
 import static wbs.utils.collection.CollectionUtils.singletonList;
+import static wbs.utils.etc.EnumUtils.enumNameHyphens;
+import static wbs.utils.etc.NullUtils.isNull;
 import static wbs.utils.etc.NumberUtils.integerToDecimalString;
 import static wbs.utils.etc.OptionalUtils.optionalFromNullable;
 import static wbs.utils.etc.OptionalUtils.optionalMapRequired;
@@ -17,6 +19,7 @@ import lombok.experimental.Accessors;
 import wbs.integrations.shopify.apiclient.ShopifyApiClientCredentials;
 import wbs.integrations.shopify.apiclient.ShopifyApiRequest;
 import wbs.integrations.shopify.apiclient.ShopifyApiResponse;
+import wbs.integrations.shopify.model.ShopifyMetafieldOwnerResource;
 
 import wbs.utils.data.Pair;
 
@@ -34,8 +37,10 @@ class ShopifyMetafieldListRequest
 	Long limit;
 	Long page;
 
+	ShopifyMetafieldOwnerResource ownerResource;
+	Long ownerId;
+
 	String namespace;
-	String metafieldOwnerResource;
 
 	List <String> fields;
 
@@ -51,8 +56,41 @@ class ShopifyMetafieldListRequest
 	public
 	String httpPath () {
 
-		return stringFormat (
-			"/admin/metafields.json");
+		if (
+			isNull (
+				ownerResource)
+		) {
+
+			throw new NullPointerException (
+				"Must set owner resource");
+
+		}
+
+		switch (ownerResource) {
+
+		case customCollection:
+
+			return stringFormat (
+				"/admin/collections/%s/metafields.json",
+				integerToDecimalString (
+					ownerId));
+
+		case product:
+
+			return stringFormat (
+				"/admin/products/%s/metafields.json",
+				integerToDecimalString (
+					ownerId));
+
+		default:
+
+			throw new RuntimeException (
+				stringFormat (
+					"Don't know how to handle owner resource: %s",
+					enumNameHyphens (
+						ownerResource)));
+
+		}
 
 	}
 
@@ -101,15 +139,6 @@ class ShopifyMetafieldListRequest
 					namespace ->
 						singletonList (
 							namespace))),
-
-			Pair.of (
-				"metafield[owner_resource]",
-				optionalMapRequired (
-					optionalFromNullable (
-						metafieldOwnerResource ()),
-					ownerResource ->
-						singletonList (
-							ownerResource))),
 
 			Pair.of (
 				"fields",

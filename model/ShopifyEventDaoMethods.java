@@ -7,16 +7,16 @@ import com.google.common.base.Optional;
 import wbs.framework.database.Transaction;
 
 public
-interface ShopifyEventSubjectDaoMethods {
+interface ShopifyEventDaoMethods {
 
 	List <Long> findIdsPendingLimit (
 			Transaction parentTransaction,
 			Long maxResults);
 
-	Optional <ShopifyEventSubjectRec> findBySubjectTypeAndId (
+	Optional <ShopifyEventRec> findBySubjectTypeAndId (
 			Transaction parentTransaction,
 			ShopifyAccountRec account,
-			String subjectType,
+			ShopifyEventSubjectType subjectType,
 			Long subjectId);
 
 }

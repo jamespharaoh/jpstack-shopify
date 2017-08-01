@@ -10,9 +10,13 @@
 
 	<models>
 
+		<enum-type name="shopifyEventSubjectType"/>
+		<enum-type name="shopifyMetafieldOwnerResource"/>
+
 		<model name="shopifyAccount"/>
+		<model name="shopifyCustomCollection"/>
 		<model name="shopifyEvent"/>
-		<model name="shopifyEventSubject"/>
+		<model name="shopifyMetafield"/>
 		<model name="shopifyProduct"/>
 
 	</models>
@@ -23,10 +27,15 @@
 
 	</sql-scripts>
 
+	<layer name="api">
+
+		<component class="api.ShopifyEventPostApiAction"/>
+
+	</layer>
+
 	<layer name="daemon">
 
-		<component class="daemon.ShopifyAccountEventPollObjectDaemonHelper"/>
-		<component class="daemon.ShopifyAccountEventSubjectProcessObjectDaemonHelper"/>
+		<component class="daemon.ShopifyAccountEventProcessObjectDaemonHelper"/>
 
 	</layer>
 
@@ -60,9 +69,18 @@
 
 	</fixtures>
 
+	<api-modules>
+
+		<api-module name="shopify"/>
+
+	</api-modules>
+
 	<console-modules>
 
 		<console-module name="shopify-account"/>
+		<console-module name="shopify-custom-collection"/>
+		<console-module name="shopify-event"/>
+		<console-module name="shopify-metafield"/>
 		<console-module name="shopify-product"/>
 
 	</console-modules>

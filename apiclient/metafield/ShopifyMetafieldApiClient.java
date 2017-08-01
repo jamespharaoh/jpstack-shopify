@@ -4,34 +4,21 @@ import java.util.List;
 
 import wbs.framework.logging.TaskLogger;
 
+import wbs.integrations.shopify.apiclient.ShopifyApiClient;
 import wbs.integrations.shopify.apiclient.ShopifyApiClientCredentials;
+import wbs.integrations.shopify.model.ShopifyMetafieldOwnerResource;
 
 public
-interface ShopifyMetafieldApiClient {
+interface ShopifyMetafieldApiClient
+	extends ShopifyApiClient <
+		ShopifyMetafieldRequest,
+		ShopifyMetafieldResponse
+	> {
 
-	List <ShopifyMetafieldResponse> listAll (
-			TaskLogger parentTaskLogger,
-			ShopifyApiClientCredentials credentials);
-
-	List <ShopifyMetafieldResponse> listByNamespaceAndOwnerResource (
-			TaskLogger parentTaskLogger,
-			ShopifyApiClientCredentials credentials,
-			String namespace,
-			String ownerResource);
-
-	ShopifyMetafieldResponse create (
+	List <ShopifyMetafieldResponse> listByOwner (
 			TaskLogger parentTaskLogger,
 			ShopifyApiClientCredentials credentials,
-			ShopifyMetafieldRequest request);
-
-	ShopifyMetafieldResponse update (
-			TaskLogger parentTaskLogger,
-			ShopifyApiClientCredentials credentials,
-			ShopifyMetafieldRequest request);
-
-	void remove (
-			TaskLogger parentTaskLogger,
-			ShopifyApiClientCredentials credentials,
-			Long id);
+			ShopifyMetafieldOwnerResource ownerResource,
+			Long ownerId);
 
 }

@@ -2,10 +2,13 @@ package wbs.integrations.shopify.apiclient.customcollection;
 
 import static wbs.utils.collection.CollectionUtils.collectionSize;
 import static wbs.utils.etc.Misc.lessThan;
+import static wbs.utils.etc.OptionalUtils.optionalAbsent;
+import static wbs.utils.etc.OptionalUtils.optionalOf;
 import static wbs.utils.etc.TypeUtils.genericCastUnchecked;
 
 import java.util.List;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 
 import lombok.NonNull;
@@ -23,6 +26,8 @@ import wbs.framework.logging.TaskLogger;
 import wbs.integrations.shopify.apiclient.ShopifyApiClientCredentials;
 import wbs.integrations.shopify.apiclient.ShopifyApiRequest;
 import wbs.integrations.shopify.apiclient.ShopifyApiResponse;
+
+import wbs.web.exceptions.HttpNotFoundException;
 
 @SingletonComponent ("shopifyCustomCollectionApiClient")
 public
@@ -106,6 +111,52 @@ class ShopifyCustomCollectionApiClientImplementation
 			}
 
 			return builder.build ();
+
+		}
+
+	}
+
+	@Override
+	public
+	Optional <ShopifyCustomCollectionResponse> get (
+			@NonNull TaskLogger parentTaskLogger,
+			@NonNull ShopifyApiClientCredentials credentials,
+			@NonNull Long id) {
+
+		try (
+
+			OwnedTaskLogger taskLogger =
+				logContext.nestTaskLogger (
+					parentTaskLogger,
+					"get");
+
+		) {
+
+			ShopifyCustomCollectionGetResponse response =
+				genericCastUnchecked (
+					shopifyHttpSenderProvider.provide (
+						taskLogger)
+
+				.allInOne (
+					taskLogger,
+					new ShopifyCustomCollectionGetRequest ()
+
+					.httpCredentials (
+						credentials)
+
+					.id (
+						id)
+
+				)
+
+			);
+
+			return optionalOf (
+				response.customCollection ());
+
+		} catch (HttpNotFoundException notFoundException) {
+
+			return optionalAbsent ();
 
 		}
 

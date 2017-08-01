@@ -57,16 +57,6 @@
 
 	</fields>
 
-	<background-processes>
-
-		<background-process
-			object-type="shopify-account"
-			name="Event poll"
-			description="Poll shopify for events"
-			frequency="5 seconds"/>
-
-	</background-processes>
-
 	<priv-types>
 
 		<priv-type

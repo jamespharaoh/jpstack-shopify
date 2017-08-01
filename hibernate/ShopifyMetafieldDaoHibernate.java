@@ -1,15 +1,11 @@
 package wbs.integrations.shopify.hibernate;
 
-import static wbs.utils.etc.NumberUtils.toJavaIntegerRequired;
-
 import java.util.List;
 
 import com.google.common.base.Optional;
 
 import lombok.NonNull;
 
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import wbs.framework.component.annotations.ClassSingletonDependency;
@@ -19,13 +15,14 @@ import wbs.framework.hibernate.HibernateDao;
 import wbs.framework.logging.LogContext;
 
 import wbs.integrations.shopify.model.ShopifyAccountRec;
-import wbs.integrations.shopify.model.ShopifyEventSubjectDaoMethods;
-import wbs.integrations.shopify.model.ShopifyEventSubjectRec;
+import wbs.integrations.shopify.model.ShopifyMetafieldDaoMethods;
+import wbs.integrations.shopify.model.ShopifyMetafieldOwnerResource;
+import wbs.integrations.shopify.model.ShopifyMetafieldRec;
 
 public
-class ShopifyEventSubjectDaoHibernate
+class ShopifyMetafieldDaoHibernate
 	extends HibernateDao
-	implements ShopifyEventSubjectDaoMethods {
+	implements ShopifyMetafieldDaoMethods {
 
 	// singleton dependencies
 
@@ -36,42 +33,38 @@ class ShopifyEventSubjectDaoHibernate
 
 	@Override
 	public
-	List <Long> findIdsPendingLimit (
+	Optional <ShopifyMetafieldRec> findByShopifyId (
 			@NonNull Transaction parentTransaction,
-			@NonNull Long maxResults) {
+			@NonNull ShopifyAccountRec account,
+			@NonNull Long id) {
 
 		try (
 
 			NestedTransaction transaction =
 				parentTransaction.nestTransaction (
 					logContext,
-					"findPendingLimit");
+					"findByShopifyId");
 
 		) {
 
-			return findMany (
+			return findOne (
 				transaction,
-				Long.class,
+				ShopifyMetafieldRec.class,
+
 				createCriteria (
 					transaction,
-					ShopifyEventSubjectRec.class,
-					"_shopifyEventSubject")
+					ShopifyMetafieldRec.class,
+					"_metafield")
 
 				.add (
 					Restrictions.eq (
-						"_shopifyEventSubject.pending",
-						true))
+						"_metafield.account",
+						account))
 
-				.addOrder (
-					Order.asc (
-						"_shopifyEventSubject.id"))
-
-				.setMaxResults (
-					toJavaIntegerRequired (
-						maxResults))
-
-				.setProjection (
-					Projections.id ())
+				.add (
+					Restrictions.eq (
+						"_metafield.shopifyId",
+						id))
 
 			);
 
@@ -81,44 +74,44 @@ class ShopifyEventSubjectDaoHibernate
 
 	@Override
 	public
-	Optional <ShopifyEventSubjectRec> findBySubjectTypeAndId (
+	List <ShopifyMetafieldRec> findByOwner (
 			@NonNull Transaction parentTransaction,
 			@NonNull ShopifyAccountRec account,
-			@NonNull String subjectType,
-			@NonNull Long subjectId) {
+			@NonNull ShopifyMetafieldOwnerResource ownerResource,
+			@NonNull Long ownerId) {
 
 		try (
 
 			NestedTransaction transaction =
 				parentTransaction.nestTransaction (
 					logContext,
-					"findBySubjectTypeAndId");
+					"findByOwner");
 
 		) {
 
-			return findOne (
+			return findMany (
 				transaction,
-				ShopifyEventSubjectRec.class,
+				ShopifyMetafieldRec.class,
 
 				createCriteria (
 					transaction,
-					ShopifyEventSubjectRec.class,
-					"_shopifyEventPending")
+					ShopifyMetafieldRec.class,
+					"_metafield")
 
 				.add (
 					Restrictions.eq (
-						"_shopifyEventPending.account",
+						"_metafield.account",
 						account))
 
 				.add (
 					Restrictions.eq (
-						"_shopifyEventPending.subjectType",
-						subjectType))
+						"_metafield.ownerResource",
+						ownerResource))
 
 				.add (
 					Restrictions.eq (
-						"_shopifyEventPending.subjectId",
-						subjectId))
+						"_metafield.ownerId",
+						ownerId))
 
 			);
 

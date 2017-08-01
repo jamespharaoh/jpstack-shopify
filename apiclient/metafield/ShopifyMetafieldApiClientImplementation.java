@@ -23,6 +23,7 @@ import wbs.framework.logging.TaskLogger;
 import wbs.integrations.shopify.apiclient.ShopifyApiClientCredentials;
 import wbs.integrations.shopify.apiclient.ShopifyApiRequest;
 import wbs.integrations.shopify.apiclient.ShopifyApiResponse;
+import wbs.integrations.shopify.model.ShopifyMetafieldOwnerResource;
 
 @SingletonComponent ("shopifyMetafieldApiClient")
 public
@@ -113,11 +114,11 @@ class ShopifyMetafieldApiClientImplementation
 
 	@Override
 	public
-	List <ShopifyMetafieldResponse> listByNamespaceAndOwnerResource (
+	List <ShopifyMetafieldResponse> listByOwner (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull String namespace,
-			@NonNull String ownerResource) {
+			@NonNull ShopifyMetafieldOwnerResource ownerResource,
+			@NonNull Long ownerId) {
 
 		try (
 
@@ -155,11 +156,11 @@ class ShopifyMetafieldApiClientImplementation
 						.page (
 							page)
 
-						.namespace (
-							namespace)
-
-						.metafieldOwnerResource (
+						.ownerResource (
 							ownerResource)
+
+						.ownerId (
+							ownerId)
 
 					)
 
