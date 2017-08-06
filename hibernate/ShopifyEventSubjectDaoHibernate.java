@@ -19,14 +19,14 @@ import wbs.framework.hibernate.HibernateDao;
 import wbs.framework.logging.LogContext;
 
 import wbs.integrations.shopify.model.ShopifyAccountRec;
-import wbs.integrations.shopify.model.ShopifyEventDaoMethods;
-import wbs.integrations.shopify.model.ShopifyEventRec;
+import wbs.integrations.shopify.model.ShopifyEventSubjectDaoMethods;
+import wbs.integrations.shopify.model.ShopifyEventSubjectRec;
 import wbs.integrations.shopify.model.ShopifyEventSubjectType;
 
 public
-class ShopifyEventDaoHibernate
+class ShopifyEventSubjectDaoHibernate
 	extends HibernateDao
-	implements ShopifyEventDaoMethods {
+	implements ShopifyEventSubjectDaoMethods {
 
 	// singleton dependencies
 
@@ -55,17 +55,17 @@ class ShopifyEventDaoHibernate
 				Long.class,
 				createCriteria (
 					transaction,
-					ShopifyEventRec.class,
-					"_shopifyEvent")
+					ShopifyEventSubjectRec.class,
+					"_shopifyEventSubject")
 
 				.add (
 					Restrictions.eq (
-						"_shopifyEvent.pending",
+						"_shopifyEventSubject.pending",
 						true))
 
 				.addOrder (
 					Order.asc (
-						"_shopifyEvent.id"))
+						"_shopifyEventSubject.id"))
 
 				.setMaxResults (
 					toJavaIntegerRequired (
@@ -82,7 +82,7 @@ class ShopifyEventDaoHibernate
 
 	@Override
 	public
-	Optional <ShopifyEventRec> findBySubjectTypeAndId (
+	Optional <ShopifyEventSubjectRec> findBySubjectTypeAndId (
 			@NonNull Transaction parentTransaction,
 			@NonNull ShopifyAccountRec account,
 			@NonNull ShopifyEventSubjectType subjectType,
@@ -99,26 +99,26 @@ class ShopifyEventDaoHibernate
 
 			return findOne (
 				transaction,
-				ShopifyEventRec.class,
+				ShopifyEventSubjectRec.class,
 
 				createCriteria (
 					transaction,
-					ShopifyEventRec.class,
-					"_shopifyEvent")
+					ShopifyEventSubjectRec.class,
+					"_shopifyEventSubject")
 
 				.add (
 					Restrictions.eq (
-						"_shopifyEvent.account",
+						"_shopifyEventSubject.account",
 						account))
 
 				.add (
 					Restrictions.eq (
-						"_shopifyEvent.subjectType",
+						"_shopifyEventSubject.subjectType",
 						subjectType))
 
 				.add (
 					Restrictions.eq (
-						"_shopifyEvent.subjectId",
+						"_shopifyEventSubject.subjectId",
 						subjectId))
 
 			);

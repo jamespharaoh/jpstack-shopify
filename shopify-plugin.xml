@@ -15,7 +15,7 @@
 
 		<model name="shopifyAccount"/>
 		<model name="shopifyCustomCollection"/>
-		<model name="shopifyEvent"/>
+		<model name="shopifyEventSubject"/>
 		<model name="shopifyMetafield"/>
 		<model name="shopifyProduct"/>
 
@@ -79,7 +79,7 @@
 
 		<console-module name="shopify-account"/>
 		<console-module name="shopify-custom-collection"/>
-		<console-module name="shopify-event"/>
+		<console-module name="shopify-event-subject"/>
 		<console-module name="shopify-metafield"/>
 		<console-module name="shopify-product"/>
 

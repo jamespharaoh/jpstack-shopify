@@ -30,9 +30,11 @@ class ShopifyCollectListRequest
 
 	ShopifyApiClientCredentials httpCredentials;
 
-	List <Long> ids;
 	Long limit;
 	Long page;
+
+	Long collectionId;
+	Long productId;
 
 	List <String> fields;
 
@@ -60,17 +62,6 @@ class ShopifyCollectListRequest
 		return presentInstancesMap (
 
 			Pair.of (
-				"ids",
-				optionalMapRequired (
-					optionalFromNullable (
-						ids ()),
-					ids ->
-						singletonList (
-							joinWithComma (
-								integerToDecimalString (
-									ids))))),
-
-			Pair.of (
 				"limit",
 				optionalMapRequired (
 					optionalFromNullable (
@@ -89,6 +80,26 @@ class ShopifyCollectListRequest
 						singletonList (
 							integerToDecimalString (
 								page + 1)))),
+
+			Pair.of (
+				"collection_id",
+				optionalMapRequired (
+					optionalFromNullable (
+						collectionId ()),
+					collectionId ->
+						singletonList (
+							integerToDecimalString (
+								collectionId)))),
+
+			Pair.of (
+				"product_id",
+				optionalMapRequired (
+					optionalFromNullable (
+						productId ()),
+					productId ->
+						singletonList (
+							integerToDecimalString (
+								productId)))),
 
 			Pair.of (
 				"fields",

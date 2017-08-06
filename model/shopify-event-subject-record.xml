@@ -1,5 +1,5 @@
 <record
-	name="shopifyEvent"
+	name="shopifyEventSubject"
 	type="event">
 
 	<fields>
@@ -24,18 +24,36 @@
 		<!-- state -->
 
 		<yes-no-field
+			name="deleted"/>
+
+		<yes-no-field
 			name="pending"/>
 
+		<!-- statistics -->
+
 		<timestamp-field
-			name="timestamp"
+			name="firstEventTime"
 			column-type="postgresql"/>
+
+		<timestamp-field
+			name="lastEventTime"
+			column-type="postgresql"/>
+
+		<integer-field
+			name="numEvents"
+			default="0"/>
+
+		<timestamp-field
+			name="lastProcessTime"
+			column-type="postgresql"
+			nullable="yes"/>
 
 	</fields>
 
 	<background-processes>
 
 		<background-process
-			object-type="shopify-event"
+			object-type="shopify-event-subject"
 			name="Process"
 			description="Process shopify events"
 			frequency="5 seconds"/>

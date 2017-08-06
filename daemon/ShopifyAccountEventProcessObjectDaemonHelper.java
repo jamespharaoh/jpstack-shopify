@@ -60,8 +60,8 @@ import wbs.integrations.shopify.metamodel.ShopifySynchronisationSpec;
 import wbs.integrations.shopify.model.ShopifyAccountObjectHelper;
 import wbs.integrations.shopify.model.ShopifyAccountRec;
 import wbs.integrations.shopify.model.ShopifyCustomCollectionObjectHelper;
-import wbs.integrations.shopify.model.ShopifyEventObjectHelper;
-import wbs.integrations.shopify.model.ShopifyEventRec;
+import wbs.integrations.shopify.model.ShopifyEventSubjectObjectHelper;
+import wbs.integrations.shopify.model.ShopifyEventSubjectRec;
 import wbs.integrations.shopify.model.ShopifyEventSubjectType;
 import wbs.integrations.shopify.model.ShopifyMetafieldObjectHelper;
 import wbs.integrations.shopify.model.ShopifyMetafieldOwnerResource;
@@ -109,7 +109,7 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 
 	@SingletonDependency
 	private
-	ShopifyEventObjectHelper shopifyEventHelper;
+	ShopifyEventSubjectObjectHelper shopifyEventSubjectHelper;
 
 	@SingletonDependency
 	private
@@ -132,7 +132,7 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 	@Override
 	public
 	String backgroundProcessName () {
-		return "shopify-event.process";
+		return "shopify-event-subject.process";
 	}
 
 	// object daemon implementation
@@ -152,7 +152,7 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 
 		) {
 
-			return shopifyEventHelper.findIdsPendingLimit (
+			return shopifyEventSubjectHelper.findIdsPendingLimit (
 				transaction,
 				16384l);
 
@@ -183,17 +183,20 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 					taskLogger,
 					eventSubjectId);
 
+			boolean remoteExists;
+
 			switch (eventData.subjectType ()) {
 
 			case collection:
 
-				if (
+				remoteExists =
 					updateRecord (
 						taskLogger,
 						eventData,
 						shopifyCustomCollectionHelper,
-						shopifyCustomCollectionApiClient)
-				) {
+						shopifyCustomCollectionApiClient);
+
+				if (remoteExists) {
 
 					updateMetafieldRecords (
 						taskLogger,
@@ -205,13 +208,14 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 
 			case product:
 
-				if (
+				remoteExists =
 					updateRecord (
 						taskLogger,
 						eventData,
 						shopifyProductHelper,
-						shopifyProductApiClient)
-				) {
+						shopifyProductApiClient);
+
+				if (remoteExists) {
 
 					updateMetafieldRecords (
 						taskLogger,
@@ -228,11 +232,15 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 					enumNameHyphens (
 						eventData.subjectType ()));
 
+				remoteExists =
+					true;
+
 			}
 
 			clearEventPending (
 				taskLogger,
-				eventData);
+				eventData,
+				remoteExists);
 
 		}
 
@@ -255,8 +263,8 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 
 		) {
 
-			ShopifyEventRec shopifyEvent =
-				shopifyEventHelper.findRequired (
+			ShopifyEventSubjectRec shopifyEventSubject =
+				shopifyEventSubjectHelper.findRequired (
 					transaction,
 					eventId);
 
@@ -266,15 +274,15 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 					eventId)
 
 				.subjectType (
-					shopifyEvent.getSubjectType ())
+					shopifyEventSubject.getSubjectType ())
 
 				.subjectId (
-					shopifyEvent.getSubjectId ())
+					shopifyEventSubject.getSubjectId ())
 
 				.credentials (
 					shopifyApiLogic.getApiCredentials (
 						transaction,
-						shopifyEvent.getAccount ()))
+						shopifyEventSubject.getAccount ()))
 
 			;
 
@@ -340,17 +348,17 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 
 		) {
 
-			ShopifyEventRec shopifyEvent =
-				shopifyEventHelper.findRequired (
+			ShopifyEventSubjectRec shopifyEventSubject =
+				shopifyEventSubjectHelper.findRequired (
 					transaction,
 					eventData.eventId ());
 
-			if (! shopifyEvent.getPending ()) {
+			if (! shopifyEventSubject.getPending ()) {
 				return;
 			}
 
 			ShopifyAccountRec shopifyAccount =
-				shopifyEvent.getAccount ();
+				shopifyEventSubject.getAccount ();
 
 			Optional <RecordType> localOptional =
 				objectHelper.findByShopifyId (
@@ -503,13 +511,13 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 
 		) {
 
-			ShopifyEventRec shopifyEvent =
-				shopifyEventHelper.findRequired (
+			ShopifyEventSubjectRec shopifyEventSubject =
+				shopifyEventSubjectHelper.findRequired (
 					transaction,
 					eventData.eventId ());
 
 			ShopifyAccountRec shopifyAccount =
-				shopifyEvent.getAccount ();
+				shopifyEventSubject.getAccount ();
 
 			// process responses
 
@@ -758,7 +766,8 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 	private
 	void clearEventPending (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull EventData eventData) {
+			@NonNull EventData eventData,
+			@NonNull Boolean remoteExists) {
 
 		try (
 
@@ -770,13 +779,23 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 
 		) {
 
-			ShopifyEventRec shopifyEvent =
-				shopifyEventHelper.findRequired (
+			ShopifyEventSubjectRec shopifyEventSubject =
+				shopifyEventSubjectHelper.findRequired (
 					transaction,
 					eventData.eventId ());
 
-			shopifyEvent.setPending (
-				false);
+			shopifyEventSubject
+
+				.setDeleted (
+					! remoteExists)
+
+				.setPending (
+					false)
+
+				.setLastProcessTime (
+					transaction.now ())
+
+			;
 
 			transaction.commit ();
 

@@ -37,8 +37,8 @@ import wbs.framework.logging.TaskLogger;
 
 import wbs.integrations.shopify.model.ShopifyAccountObjectHelper;
 import wbs.integrations.shopify.model.ShopifyAccountRec;
-import wbs.integrations.shopify.model.ShopifyEventObjectHelper;
-import wbs.integrations.shopify.model.ShopifyEventRec;
+import wbs.integrations.shopify.model.ShopifyEventSubjectObjectHelper;
+import wbs.integrations.shopify.model.ShopifyEventSubjectRec;
 import wbs.integrations.shopify.model.ShopifyEventSubjectType;
 
 import wbs.platform.media.logic.MediaLogic;
@@ -72,7 +72,7 @@ class ShopifyEventPostApiAction
 	ShopifyAccountObjectHelper shopifyAccountHelper;
 
 	@SingletonDependency
-	ShopifyEventObjectHelper shopifyEventHelper;
+	ShopifyEventSubjectObjectHelper shopifyEventSubjectHelper;
 
 	// prototype dependencies
 
@@ -233,29 +233,29 @@ class ShopifyEventPostApiAction
 
 			// store event
 
-			Optional <ShopifyEventRec> shopifyEventOptional =
-				shopifyEventHelper.findBySubjectTypeAndId (
+			Optional <ShopifyEventSubjectRec> shopifyEventSubjectOptional =
+				shopifyEventSubjectHelper.findBySubjectTypeAndId (
 					transaction,
 					shopifyAccount,
 					ShopifyEventSubjectType.fromTopic (
 						topicSubjectType),
 					subjectId);
 
-			ShopifyEventRec shopifyEvent;
+			ShopifyEventSubjectRec shopifyEventSubject;
 
 			if (
 				optionalIsPresent (
-					shopifyEventOptional)
+					shopifyEventSubjectOptional)
 			) {
 
-				shopifyEvent =
+				shopifyEventSubject =
 					optionalGetRequired (
-						shopifyEventOptional);
+						shopifyEventSubjectOptional);
 
 			} else {
 
-				shopifyEvent =
-					shopifyEventHelper.createInstance ()
+				shopifyEventSubject =
+					shopifyEventSubjectHelper.createInstance ()
 
 					.setAccount (
 						shopifyAccount)
@@ -267,34 +267,43 @@ class ShopifyEventPostApiAction
 					.setSubjectId (
 						subjectId)
 
+					.setDeleted (
+						false)
+
+					.setFirstEventTime (
+						transaction.now ())
+
 				;
 
 			}
 
-			shopifyEvent
+			shopifyEventSubject
 
 				.setPending (
 					true)
 
-				.setTimestamp (
+				.setLastEventTime (
 					transaction.now ())
+
+				.setNumEvents (
+					1 + shopifyEventSubject.getNumEvents ())
 
 			;
 
 			if (
 				optionalIsPresent (
-					shopifyEventOptional)
+					shopifyEventSubjectOptional)
 			) {
 
-				shopifyEventHelper.update (
+				shopifyEventSubjectHelper.update (
 					transaction,
-					shopifyEvent);
+					shopifyEventSubject);
 
 			} else {
 
-				shopifyEventHelper.insert (
+				shopifyEventSubjectHelper.insert (
 					transaction,
-					shopifyEvent);
+					shopifyEventSubject);
 
 			}
 
