@@ -82,6 +82,47 @@ class ShopifyEventSubjectDaoHibernate
 
 	@Override
 	public
+	List <ShopifyEventSubjectRec> findBySubjectType (
+			@NonNull Transaction parentTransaction,
+			@NonNull ShopifyAccountRec account,
+			@NonNull ShopifyEventSubjectType subjectType) {
+
+		try (
+
+			NestedTransaction transaction =
+				parentTransaction.nestTransaction (
+					logContext,
+					"findBySubjectType");
+
+		) {
+
+			return findMany (
+				transaction,
+				ShopifyEventSubjectRec.class,
+
+				createCriteria (
+					transaction,
+					ShopifyEventSubjectRec.class,
+					"_shopifyEventSubject")
+
+				.add (
+					Restrictions.eq (
+						"_shopifyEventSubject.account",
+						account))
+
+				.add (
+					Restrictions.eq (
+						"_shopifyEventSubject.subjectType",
+						subjectType))
+
+			);
+
+		}
+
+	}
+
+	@Override
+	public
 	Optional <ShopifyEventSubjectRec> findBySubjectTypeAndId (
 			@NonNull Transaction parentTransaction,
 			@NonNull ShopifyAccountRec account,

@@ -49,6 +49,10 @@
 			name="lastEventId"
 			default="0"/>
 
+		<timestamp-field
+			name="nextFullSynchronise"
+			column-type="postgresql"/>
+
 		<!-- statistics -->
 
 		<integer-field
@@ -56,6 +60,16 @@
 			default="0"/>
 
 	</fields>
+
+	<background-processes>
+
+		<background-process
+			object-type="shopify-account"
+			name="Full synchronise"
+			description="Fully synchronise shopify account"
+			frequency="30 seconds"/>
+
+	</background-processes>
 
 	<priv-types>
 

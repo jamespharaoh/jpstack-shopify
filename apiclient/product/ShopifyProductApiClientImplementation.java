@@ -2,6 +2,8 @@
 package wbs.integrations.shopify.apiclient.product;
 
 import static wbs.utils.collection.CollectionUtils.collectionSize;
+import static wbs.utils.collection.CollectionUtils.singletonList;
+import static wbs.utils.collection.IterableUtils.iterableMap;
 import static wbs.utils.etc.Misc.lessThan;
 import static wbs.utils.etc.OptionalUtils.optionalAbsent;
 import static wbs.utils.etc.OptionalUtils.optionalOf;
@@ -62,7 +64,7 @@ class ShopifyProductApiClientImplementation
 			OwnedTaskLogger taskLogger =
 				logContext.nestTaskLogger (
 					parentTaskLogger,
-					"listProducts")
+					"listAll")
 
 		) {
 
@@ -119,6 +121,78 @@ class ShopifyProductApiClientImplementation
 
 	@Override
 	public
+	List <Long> listAllIds (
+			@NonNull TaskLogger parentTaskLogger,
+			@NonNull ShopifyApiClientCredentials credentials) {
+
+		try (
+
+			OwnedTaskLogger taskLogger =
+				logContext.nestTaskLogger (
+					parentTaskLogger,
+					"listAllIds");
+
+		) {
+
+			ImmutableList.Builder <Long> builder =
+				ImmutableList.builder ();
+
+			for (
+				long page = 0l;
+				true;
+				page ++
+			) {
+
+				ShopifyProductListResponse response =
+					genericCastUnchecked (
+						shopifyHttpSenderProvider.provide (
+							taskLogger)
+
+					.allInOne (
+						taskLogger,
+						new ShopifyProductListRequest ()
+
+						.httpCredentials (
+							credentials)
+
+						.limit (
+							250l)
+
+						.page (
+							page)
+
+						.fields (
+							singletonList (
+								"id"))
+
+					)
+
+				);
+
+				builder.addAll (
+					iterableMap (
+						response.products (),
+						ShopifyProductResponse::id));
+
+				if (
+					lessThan (
+						collectionSize (
+							response.products ()),
+						250l)
+				) {
+					break;
+				}
+
+			}
+
+			return builder.build ();
+
+		}
+
+	}
+
+	@Override
+	public
 	ShopifyProductResponse create (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
@@ -129,7 +203,7 @@ class ShopifyProductApiClientImplementation
 			OwnedTaskLogger taskLogger =
 				logContext.nestTaskLogger (
 					parentTaskLogger,
-					"createProduct");
+					"create");
 
 		) {
 
@@ -216,7 +290,7 @@ class ShopifyProductApiClientImplementation
 			OwnedTaskLogger taskLogger =
 				logContext.nestTaskLogger (
 					parentTaskLogger,
-					"upadte");
+					"update");
 
 		) {
 
@@ -257,7 +331,7 @@ class ShopifyProductApiClientImplementation
 			OwnedTaskLogger taskLogger =
 				logContext.nestTaskLogger (
 					parentTaskLogger,
-					"removeProduct");
+					"remove");
 
 		) {
 

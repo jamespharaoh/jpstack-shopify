@@ -16,8 +16,6 @@ import static wbs.utils.etc.OptionalUtils.optionalOrNull;
 import static wbs.utils.etc.PropertyUtils.propertyClassForObject;
 import static wbs.utils.etc.PropertyUtils.propertyGetSimple;
 import static wbs.utils.etc.PropertyUtils.propertySetAuto;
-import static wbs.utils.etc.TypeUtils.classInSafe;
-import static wbs.utils.etc.TypeUtils.dynamicCastRequired;
 import static wbs.utils.string.StringUtils.hyphenToCamel;
 import static wbs.utils.string.StringUtils.keyEqualsDecimalInteger;
 
@@ -30,9 +28,6 @@ import com.google.common.collect.ImmutableMap;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
-
-import org.joda.time.Instant;
-import org.joda.time.ReadableInstant;
 
 import wbs.framework.component.annotations.ClassSingletonDependency;
 import wbs.framework.component.annotations.SingletonComponent;
@@ -72,9 +67,9 @@ import wbs.integrations.shopify.model.ShopifyRecord;
 
 import wbs.platform.daemon.ObjectDaemon;
 
-@SingletonComponent ("shopifyAccountEventProcessObjectDaemonHelper")
+@SingletonComponent ("shopifyEventSubjectProcessObjectDaemonHelper")
 public
-class ShopifyAccountEventProcessObjectDaemonHelper
+class ShopifyEventSubjectProcessObjectDaemonHelper
 	implements ObjectDaemon <Long> {
 
 	// singleton dependencies
@@ -133,6 +128,24 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 	public
 	String backgroundProcessName () {
 		return "shopify-event-subject.process";
+	}
+
+	@Override
+	public
+	String itemNameSingular () {
+		return "Shopify event subject";
+	}
+
+	@Override
+	public
+	String itemNamePlural () {
+		return "Shopify event subjects";
+	}
+
+	@Override
+	public
+	LogContext logContext () {
+		return logContext;
 	}
 
 	// object daemon implementation
@@ -678,14 +691,12 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 							hyphenToCamel (
 								fieldName)));
 
+				// perform conversion
+
 				if (
 					optionalIsPresent (
 						fieldValueOptional)
 				) {
-
-					Object fieldValue =
-						optionalGetRequired (
-							fieldValueOptional);
 
 					Class <?> targetClass =
 						propertyClassForObject (
@@ -693,57 +704,17 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 							hyphenToCamel (
 								fieldName));
 
-					// convert string to instant
-
-					if (
-
-						classInSafe (
-							fieldValue.getClass (),
-							String.class)
-
-						&& classInSafe (
-							targetClass,
-							Instant.class,
-							ReadableInstant.class)
-
-					) {
-
-						fieldValue =
-							Instant.parse (
-								dynamicCastRequired (
-									String.class,
-									fieldValue));
-
-					}
-
-					// convert string to metafield owner resource
-
-					if (
-
-						classInSafe (
-							fieldValue.getClass (),
-							String.class)
-
-						&& classInSafe (
-							targetClass,
-							ShopifyMetafieldOwnerResource.class)
-
-					) {
-
-						fieldValue =
-							mapItemForKeyRequired (
-								stringToMetafieldOwnerResource,
-								dynamicCastRequired (
-									String.class,
-									fieldValue));
-
-					}
-
 					fieldValueOptional =
 						optionalOf (
-							fieldValue);
+							shopifyApiLogic.responseToLocal (
+								transaction,
+								optionalGetRequired (
+									fieldValueOptional),
+								targetClass));
 
 				}
+
+				// set local property
 
 				propertySetAuto (
 					object,
@@ -834,21 +805,6 @@ class ShopifyAccountEventProcessObjectDaemonHelper
 
 		.put (
 			ShopifyEventSubjectType.product,
-			ShopifyMetafieldOwnerResource.product)
-
-		.build ()
-
-	;
-
-	Map <String, ShopifyMetafieldOwnerResource> stringToMetafieldOwnerResource =
-		ImmutableMap.<String, ShopifyMetafieldOwnerResource> builder ()
-
-		.put (
-			"custom_collection",
-			ShopifyMetafieldOwnerResource.customCollection)
-
-		.put (
-			"product",
 			ShopifyMetafieldOwnerResource.product)
 
 		.build ()

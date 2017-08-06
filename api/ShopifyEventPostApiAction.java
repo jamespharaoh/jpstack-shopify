@@ -34,6 +34,7 @@ import wbs.framework.database.Database;
 import wbs.framework.database.OwnedTransaction;
 import wbs.framework.logging.LogContext;
 import wbs.framework.logging.TaskLogger;
+import wbs.framework.object.ObjectManager;
 
 import wbs.integrations.shopify.model.ShopifyAccountObjectHelper;
 import wbs.integrations.shopify.model.ShopifyAccountRec;
@@ -64,6 +65,9 @@ class ShopifyEventPostApiAction
 
 	@SingletonDependency
 	MediaLogic mediaLogic;
+
+	@SingletonDependency
+	ObjectManager objectManager;
 
 	@SingletonDependency
 	RequestContext requestContext;
@@ -118,6 +122,11 @@ class ShopifyEventPostApiAction
 			ShopifyAccountRec shopifyAccount =
 				optionalGetRequired (
 					shopifyAccountOptional);
+
+			String shopifyAccountName =
+				objectManager.objectPathMini (
+					transaction,
+					shopifyAccount);
 
 			// interpret topic header
 
@@ -313,8 +322,7 @@ class ShopifyEventPostApiAction
 
 			transaction.noticeFormat (
 				"Event %s %s %s",
-				integerToDecimalString (
-					shopifyAccountId),
+				shopifyAccountName,
 				shopifyTopic,
 				integerToDecimalString (
 					subjectId));

@@ -35,7 +35,8 @@
 
 	<layer name="daemon">
 
-		<component class="daemon.ShopifyAccountEventProcessObjectDaemonHelper"/>
+		<component class="daemon.ShopifyAccountFullSynchroniseObjectDaemonHelper"/>
+		<component class="daemon.ShopifyEventSubjectProcessObjectDaemonHelper"/>
 
 	</layer>
 

@@ -13,6 +13,11 @@ interface ShopifyEventSubjectDaoMethods {
 			Transaction parentTransaction,
 			Long maxResults);
 
+	List <ShopifyEventSubjectRec> findBySubjectType (
+			Transaction parentTransaction,
+			ShopifyAccountRec account,
+			ShopifyEventSubjectType subjectType);
+
 	Optional <ShopifyEventSubjectRec> findBySubjectTypeAndId (
 			Transaction parentTransaction,
 			ShopifyAccountRec account,

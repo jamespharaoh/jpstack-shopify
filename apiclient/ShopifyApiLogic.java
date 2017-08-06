@@ -11,4 +11,9 @@ interface ShopifyApiLogic {
 			Transaction parentTransaction,
 			ShopifyAccountRec shopifyAccount);
 
+	Object responseToLocal (
+			Transaction parentTransaction,
+			Object responseValue,
+			Class <?> localClass);
+
 }

@@ -28,6 +28,17 @@ interface ShopifyApiClient <
 	}
 
 	default
+	List <Long> listAllIds (
+			@NonNull TaskLogger parentTaskLogger,
+			@NonNull ShopifyApiClientCredentials credentials) {
+
+		throw unsupportedOperation (
+			this,
+			"listAllIds");
+
+	}
+
+	default
 	Optional <Response> get (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,

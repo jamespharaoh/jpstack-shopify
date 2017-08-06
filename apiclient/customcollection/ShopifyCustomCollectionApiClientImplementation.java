@@ -1,6 +1,8 @@
 package wbs.integrations.shopify.apiclient.customcollection;
 
 import static wbs.utils.collection.CollectionUtils.collectionSize;
+import static wbs.utils.collection.CollectionUtils.singletonList;
+import static wbs.utils.collection.IterableUtils.iterableMap;
 import static wbs.utils.etc.Misc.lessThan;
 import static wbs.utils.etc.OptionalUtils.optionalAbsent;
 import static wbs.utils.etc.OptionalUtils.optionalOf;
@@ -98,6 +100,78 @@ class ShopifyCustomCollectionApiClientImplementation
 
 				builder.addAll (
 					response.collections ());
+
+				if (
+					lessThan (
+						collectionSize (
+							response.collections ()),
+						250l)
+				) {
+					break;
+				}
+
+			}
+
+			return builder.build ();
+
+		}
+
+	}
+
+	@Override
+	public
+	List <Long> listAllIds (
+			@NonNull TaskLogger parentTaskLogger,
+			@NonNull ShopifyApiClientCredentials credentials) {
+
+		try (
+
+			OwnedTaskLogger taskLogger =
+				logContext.nestTaskLogger (
+					parentTaskLogger,
+					"listAllIds");
+
+		) {
+
+			ImmutableList.Builder <Long> builder =
+				ImmutableList.builder ();
+
+			for (
+				long page = 0l;
+				true;
+				page ++
+			) {
+
+				ShopifyCustomCollectionListResponse response =
+					genericCastUnchecked (
+						shopifyHttpSenderProvider.provide (
+							taskLogger)
+
+					.allInOne (
+						taskLogger,
+						new ShopifyCustomCollectionListRequest ()
+
+						.httpCredentials (
+							credentials)
+
+						.limit (
+							250l)
+
+						.page (
+							page)
+
+						.fields (
+							singletonList (
+								"id"))
+
+					)
+
+				);
+
+				builder.addAll (
+					iterableMap (
+						response.collections (),
+						ShopifyCustomCollectionResponse::id));
 
 				if (
 					lessThan (

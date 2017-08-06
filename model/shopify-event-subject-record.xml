@@ -33,11 +33,13 @@
 
 		<timestamp-field
 			name="firstEventTime"
-			column-type="postgresql"/>
+			column-type="postgresql"
+			nullable="yes"/>
 
 		<timestamp-field
 			name="lastEventTime"
-			column-type="postgresql"/>
+			column-type="postgresql"
+			nullable="yes"/>
 
 		<integer-field
 			name="numEvents"

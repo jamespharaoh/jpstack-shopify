@@ -3,6 +3,7 @@ package wbs.integrations.shopify.fixture;
 import static wbs.utils.collection.MapUtils.mapItemForKeyRequired;
 import static wbs.utils.collection.SetUtils.emptySet;
 import static wbs.utils.string.CodeUtils.simplifyToCodeRequired;
+import static wbs.utils.time.TimeUtils.isoTimestampString;
 
 import java.util.Map;
 
@@ -181,6 +182,11 @@ class ShopifyFixtureProvider
 							mapItemForKeyRequired (
 								suppliedParams,
 								"name")))
+
+					.put (
+						"nextFullSynchronise",
+						isoTimestampString (
+							transaction.now ()))
 
 					.build ()
 
