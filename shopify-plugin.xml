@@ -16,7 +16,9 @@
 		<model name="shopifyAccount"/>
 		<model name="shopifyCustomCollection"/>
 		<model name="shopifyEventSubject"/>
+		<model name="shopifyInboundLog"/>
 		<model name="shopifyMetafield"/>
+		<model name="shopifyOutboundLog"/>
 		<model name="shopifyProduct"/>
 
 	</models>
@@ -78,10 +80,13 @@
 
 	<console-modules>
 
+		<console-module name="shopify"/>
 		<console-module name="shopify-account"/>
 		<console-module name="shopify-custom-collection"/>
 		<console-module name="shopify-event-subject"/>
+		<console-module name="shopify-inbound-log"/>
 		<console-module name="shopify-metafield"/>
+		<console-module name="shopify-outbound-log"/>
 		<console-module name="shopify-product"/>
 
 	</console-modules>

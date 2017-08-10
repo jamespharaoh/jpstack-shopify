@@ -1,0 +1,32 @@
+<console-module
+	name="shopify">
+
+	<simple-context
+		name="shopify">
+
+		<context-link
+			name="account"
+			link="shopifyAccount"
+			label="Accounts"/>
+
+		<section
+			name="log"
+			label="Logs">
+
+			<!--
+			<context-link
+				name="in"
+				link="shopifyInboundLog"
+				label="In"/>
+			-->
+
+			<context-link
+				name="out"
+				link="shopifyOutboundLog"
+				label="Out"/>
+
+		</section>
+
+	</simple-context>
+
+</console-module>

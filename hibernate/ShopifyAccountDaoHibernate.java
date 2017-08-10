@@ -11,7 +11,7 @@ import org.joda.time.Instant;
 import wbs.framework.component.annotations.ClassSingletonDependency;
 import wbs.framework.database.NestedTransaction;
 import wbs.framework.database.Transaction;
-import wbs.framework.hibernate.HibernateDao;
+import wbs.framework.hibernate.HibernateDaoLegacy;
 import wbs.framework.logging.LogContext;
 
 import wbs.integrations.shopify.model.ShopifyAccountDaoMethods;
@@ -19,7 +19,7 @@ import wbs.integrations.shopify.model.ShopifyAccountRec;
 
 public
 class ShopifyAccountDaoHibernate
-	extends HibernateDao
+	extends HibernateDaoLegacy
 	implements ShopifyAccountDaoMethods {
 
 	// singleton dependencies

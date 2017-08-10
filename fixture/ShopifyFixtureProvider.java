@@ -139,7 +139,7 @@ class ShopifyFixtureProvider
 					"Shopify")
 
 				.setTargetPath (
-					"/shopifyAccounts")
+					"/shopify")
 
 				.setTargetFrame (
 					"main")

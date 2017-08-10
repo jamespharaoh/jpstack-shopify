@@ -15,12 +15,14 @@ import wbs.framework.component.annotations.ClassSingletonDependency;
 import wbs.framework.component.annotations.NamedDependency;
 import wbs.framework.component.annotations.PrototypeDependency;
 import wbs.framework.component.annotations.SingletonComponent;
+import wbs.framework.component.annotations.SingletonDependency;
 import wbs.framework.component.manager.ComponentProvider;
 import wbs.framework.logging.LogContext;
 import wbs.framework.logging.OwnedTaskLogger;
 import wbs.framework.logging.TaskLogger;
 
 import wbs.integrations.shopify.apiclient.ShopifyApiClientCredentials;
+import wbs.integrations.shopify.apiclient.ShopifyApiLogic;
 import wbs.integrations.shopify.apiclient.ShopifyApiRequest;
 import wbs.integrations.shopify.apiclient.ShopifyApiResponse;
 import wbs.integrations.shopify.model.ShopifyMetafieldOwnerResource;
@@ -34,6 +36,9 @@ class ShopifyMetafieldApiClientImplementation
 
 	@ClassSingletonDependency
 	LogContext logContext;
+
+	@SingletonDependency
+	ShopifyApiLogic shopifyApiLogic;
 
 	// prototype dependencies
 
@@ -77,16 +82,21 @@ class ShopifyMetafieldApiClientImplementation
 
 					.allInOne (
 						taskLogger,
+
 						new ShopifyMetafieldListRequest ()
 
-						.httpCredentials (
-							credentials)
+							.httpCredentials (
+								credentials)
 
-						.limit (
-							250l)
+							.limit (
+								250l)
 
-						.page (
-							page)
+							.page (
+								page),
+
+						shopifyApiLogic.createOutboundLog (
+							taskLogger,
+							credentials.accountId ())
 
 					)
 
@@ -145,22 +155,27 @@ class ShopifyMetafieldApiClientImplementation
 
 					.allInOne (
 						taskLogger,
+
 						new ShopifyMetafieldListRequest ()
 
-						.httpCredentials (
-							credentials)
+							.httpCredentials (
+								credentials)
 
-						.limit (
-							250l)
+							.limit (
+								250l)
 
-						.page (
-							page)
+							.page (
+								page)
 
-						.ownerResource (
-							ownerResource)
+							.ownerResource (
+								ownerResource)
 
-						.ownerId (
-							ownerId)
+							.ownerId (
+								ownerId),
+
+						shopifyApiLogic.createOutboundLog (
+							taskLogger,
+							credentials.accountId ())
 
 					)
 
@@ -211,11 +226,15 @@ class ShopifyMetafieldApiClientImplementation
 					taskLogger,
 					new ShopifyMetafieldCreateRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.metafield (
-						request)
+						.metafield (
+							request),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 
@@ -250,13 +269,18 @@ class ShopifyMetafieldApiClientImplementation
 
 				.allInOne (
 					taskLogger,
+
 					new ShopifyMetafieldUpdateRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.metafield (
-						metafield)
+						.metafield (
+							metafield),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 
@@ -289,13 +313,18 @@ class ShopifyMetafieldApiClientImplementation
 
 				.allInOne (
 					taskLogger,
+
 					new ShopifyMetafieldRemoveRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.id (
-						id)
+						.id (
+							id),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 

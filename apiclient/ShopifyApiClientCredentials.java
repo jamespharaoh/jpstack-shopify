@@ -8,6 +8,8 @@ import lombok.experimental.Accessors;
 public
 class ShopifyApiClientCredentials {
 
+	Long accountId;
+
 	String storeName;
 	String username;
 	String password;

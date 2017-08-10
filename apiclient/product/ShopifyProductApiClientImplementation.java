@@ -21,12 +21,14 @@ import wbs.framework.component.annotations.ClassSingletonDependency;
 import wbs.framework.component.annotations.NamedDependency;
 import wbs.framework.component.annotations.PrototypeDependency;
 import wbs.framework.component.annotations.SingletonComponent;
+import wbs.framework.component.annotations.SingletonDependency;
 import wbs.framework.component.manager.ComponentProvider;
 import wbs.framework.logging.LogContext;
 import wbs.framework.logging.OwnedTaskLogger;
 import wbs.framework.logging.TaskLogger;
 
 import wbs.integrations.shopify.apiclient.ShopifyApiClientCredentials;
+import wbs.integrations.shopify.apiclient.ShopifyApiLogic;
 import wbs.integrations.shopify.apiclient.ShopifyApiRequest;
 import wbs.integrations.shopify.apiclient.ShopifyApiResponse;
 
@@ -41,6 +43,9 @@ class ShopifyProductApiClientImplementation
 
 	@ClassSingletonDependency
 	LogContext logContext;
+
+	@SingletonDependency
+	ShopifyApiLogic shopifyApiLogic;
 
 	// prototype dependencies
 
@@ -84,16 +89,21 @@ class ShopifyProductApiClientImplementation
 
 					.allInOne (
 						taskLogger,
+
 						new ShopifyProductListRequest ()
 
-						.httpCredentials (
-							credentials)
+							.httpCredentials (
+								credentials)
 
-						.limit (
-							250l)
+							.limit (
+								250l)
 
-						.page (
-							page)
+							.page (
+								page),
+
+						shopifyApiLogic.createOutboundLog (
+							taskLogger,
+							credentials.accountId ())
 
 					)
 
@@ -150,20 +160,25 @@ class ShopifyProductApiClientImplementation
 
 					.allInOne (
 						taskLogger,
+
 						new ShopifyProductListRequest ()
 
-						.httpCredentials (
-							credentials)
+							.httpCredentials (
+								credentials)
 
-						.limit (
-							250l)
+							.limit (
+								250l)
 
-						.page (
-							page)
+							.page (
+								page)
 
-						.fields (
-							singletonList (
-								"id"))
+							.fields (
+								singletonList (
+									"id")),
+
+						shopifyApiLogic.createOutboundLog (
+							taskLogger,
+							credentials.accountId ())
 
 					)
 
@@ -214,13 +229,18 @@ class ShopifyProductApiClientImplementation
 
 				.allInOne (
 					taskLogger,
+
 					new ShopifyProductCreateRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.product (
-						product)
+						.product (
+							product),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 
@@ -255,13 +275,18 @@ class ShopifyProductApiClientImplementation
 
 				.allInOne (
 					taskLogger,
+
 					new ShopifyProductGetRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.id (
-						id)
+						.id (
+							id),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 
@@ -301,13 +326,18 @@ class ShopifyProductApiClientImplementation
 
 				.allInOne (
 					taskLogger,
+
 					new ShopifyProductUpdateRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.product (
-						product)
+						.product (
+							product),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 
@@ -342,11 +372,15 @@ class ShopifyProductApiClientImplementation
 					taskLogger,
 					new ShopifyProductRemoveRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.id (
-						id)
+						.id (
+							id),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 

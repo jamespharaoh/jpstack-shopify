@@ -316,7 +316,7 @@ class ShopifyAccountFullSynchroniseObjectDaemonHelper
 			Set <Long> existingSubjectIds =
 				iterableMapToSet (
 					existingSubjects,
-					ShopifyEventSubjectRec::getId);
+					ShopifyEventSubjectRec::getSubjectId);
 
 			for (
 				Long shopifyId

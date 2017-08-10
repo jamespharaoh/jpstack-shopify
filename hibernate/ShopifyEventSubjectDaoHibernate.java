@@ -15,7 +15,7 @@ import org.hibernate.criterion.Restrictions;
 import wbs.framework.component.annotations.ClassSingletonDependency;
 import wbs.framework.database.NestedTransaction;
 import wbs.framework.database.Transaction;
-import wbs.framework.hibernate.HibernateDao;
+import wbs.framework.hibernate.HibernateDaoLegacy;
 import wbs.framework.logging.LogContext;
 
 import wbs.integrations.shopify.model.ShopifyAccountRec;
@@ -25,7 +25,7 @@ import wbs.integrations.shopify.model.ShopifyEventSubjectType;
 
 public
 class ShopifyEventSubjectDaoHibernate
-	extends HibernateDao
+	extends HibernateDaoLegacy
 	implements ShopifyEventSubjectDaoMethods {
 
 	// singleton dependencies

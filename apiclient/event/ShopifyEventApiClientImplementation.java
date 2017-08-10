@@ -20,6 +20,7 @@ import wbs.framework.logging.OwnedTaskLogger;
 import wbs.framework.logging.TaskLogger;
 
 import wbs.integrations.shopify.apiclient.ShopifyApiClientCredentials;
+import wbs.integrations.shopify.apiclient.ShopifyApiLogic;
 import wbs.integrations.shopify.apiclient.ShopifyApiRequest;
 import wbs.integrations.shopify.apiclient.ShopifyApiResponse;
 
@@ -37,6 +38,10 @@ class ShopifyEventApiClientImplementation
 	@ClassSingletonDependency
 	private
 	LogContext logContext;
+
+	@SingletonDependency
+	private
+	ShopifyApiLogic shopifyApiLogic;
 
 	// prototype dependencies
 
@@ -82,16 +87,21 @@ class ShopifyEventApiClientImplementation
 
 				.allInOne (
 					taskLogger,
+
 					new ShopifyEventListRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.limit (
-						maxItems)
+						.limit (
+							maxItems)
 
-					.sinceId (
-						eventId)
+						.sinceId (
+							eventId),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 

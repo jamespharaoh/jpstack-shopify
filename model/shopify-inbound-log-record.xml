@@ -1,0 +1,41 @@
+<record
+	name="shopifyInboundLog"
+	type="event">
+
+	<fields>
+
+		<!-- id -->
+
+		<generated-id-field/>
+
+		<!-- details -->
+
+		<timestamp-field
+			name="timestamp"
+			column-type="postgresql"/>
+
+		<reference-field
+			name="account"
+			type="shopifyAccount"
+			nullable="yes"/>
+
+		<string-field
+			name="remoteIp"/>
+
+		<yes-no-field
+			name="success"/>
+
+		<string-field
+			name="log"/>
+
+		<string-field
+			name="request"
+			nullable="yes"/>
+
+		<string-field
+			name="response"
+			nullable="yes"/>
+
+	</fields>
+
+</record>

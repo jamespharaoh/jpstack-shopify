@@ -20,12 +20,14 @@ import wbs.framework.component.annotations.ClassSingletonDependency;
 import wbs.framework.component.annotations.NamedDependency;
 import wbs.framework.component.annotations.PrototypeDependency;
 import wbs.framework.component.annotations.SingletonComponent;
+import wbs.framework.component.annotations.SingletonDependency;
 import wbs.framework.component.manager.ComponentProvider;
 import wbs.framework.logging.LogContext;
 import wbs.framework.logging.OwnedTaskLogger;
 import wbs.framework.logging.TaskLogger;
 
 import wbs.integrations.shopify.apiclient.ShopifyApiClientCredentials;
+import wbs.integrations.shopify.apiclient.ShopifyApiLogic;
 import wbs.integrations.shopify.apiclient.ShopifyApiRequest;
 import wbs.integrations.shopify.apiclient.ShopifyApiResponse;
 
@@ -39,7 +41,12 @@ class ShopifyCustomCollectionApiClientImplementation
 	// singleton dependencies
 
 	@ClassSingletonDependency
+	private
 	LogContext logContext;
+
+	@SingletonDependency
+	private
+	ShopifyApiLogic shopifyApiLogic;
 
 	// prototype dependencies
 
@@ -85,14 +92,18 @@ class ShopifyCustomCollectionApiClientImplementation
 						taskLogger,
 						new ShopifyCustomCollectionListRequest ()
 
-						.httpCredentials (
-							credentials)
+							.httpCredentials (
+								credentials)
 
-						.limit (
-							250l)
+							.limit (
+								250l)
 
-						.page (
-							page)
+							.page (
+								page),
+
+						shopifyApiLogic.createOutboundLog (
+							taskLogger,
+							credentials.accountId ())
 
 					)
 
@@ -151,18 +162,22 @@ class ShopifyCustomCollectionApiClientImplementation
 						taskLogger,
 						new ShopifyCustomCollectionListRequest ()
 
-						.httpCredentials (
-							credentials)
+							.httpCredentials (
+								credentials)
 
-						.limit (
-							250l)
+							.limit (
+								250l)
 
-						.page (
-							page)
+							.page (
+								page)
 
-						.fields (
-							singletonList (
-								"id"))
+							.fields (
+								singletonList (
+									"id")),
+
+						shopifyApiLogic.createOutboundLog (
+							taskLogger,
+							credentials.accountId ())
 
 					)
 
@@ -215,11 +230,15 @@ class ShopifyCustomCollectionApiClientImplementation
 					taskLogger,
 					new ShopifyCustomCollectionGetRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.id (
-						id)
+						.id (
+							id),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 
@@ -259,13 +278,18 @@ class ShopifyCustomCollectionApiClientImplementation
 
 				.allInOne (
 					taskLogger,
+
 					new ShopifyCustomCollectionCreateRequest ()
 
-					.httpCredentials (
-						credentials)
+						.httpCredentials (
+							credentials)
 
-					.collection (
-						collection)
+						.collection (
+							collection),
+
+					shopifyApiLogic.createOutboundLog (
+						taskLogger,
+						credentials.accountId ())
 
 				)
 

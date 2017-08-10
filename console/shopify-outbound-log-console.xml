@@ -1,0 +1,133 @@
+<console-module
+	name="shopify-outbound-log">
+
+	<console-helper-provider
+		object-name="shopifyOutboundLog"
+		view-priv="root:manage">
+
+		<priv-key
+			name="shopifyOutbountLog.manage"
+			priv="root:manage"/>
+
+		<context-stuff
+			name="shopifyOutboundLogName"
+			field="id"/>
+
+	</console-helper-provider>
+
+	<object-context
+		name="shopifyOutboundLog"
+		object-name="shopifyOutboundLog">
+
+		<list>
+
+			<object-search-page
+				search-class="wbs.integrations.shopify.model.ShopifyOutboundLogSearch"
+				search-form="search"
+				results-form="results"/>
+
+		</list>
+
+		<object>
+
+			<object-summary-page
+				form="summary"/>
+
+		</object>
+
+	</object-context>
+
+	<forms>
+
+		<form
+			name="search"
+			class="wbs.integrations.shopify.model.ShopifyOutboundLogSearch"
+			type="search">
+
+			<columns>
+
+				<object-field
+					name="accountId"
+					object-type="shopifyAccount"
+					nullable="yes"/>
+
+				<interval-field
+					name="timestamp"
+					nullable="yes"/>
+
+				<yes-no-field
+					name="success"
+					nullable="yes"/>
+
+			</columns>
+
+		</form>
+
+		<form
+			name="results"
+			object-type="shopify-outbound-log"
+			type="read-only">
+
+			<columns>
+
+				<timestamp-field
+					name="timestamp"/>
+
+				<object-field
+					name="account"
+					object-type="shopifyAccount"/>
+
+				<text-field
+					name="method"/>
+
+				<text-field
+					name="path"/>
+
+				<yes-no-field
+					name="success"/>
+
+			</columns>
+
+		</form>
+
+		<form
+			name="summary"
+			object-type="shopify-outbound-log"
+			type="read-only">
+
+			<columns>
+
+				<id-field/>
+
+				<timestamp-field
+					name="timestamp"/>
+
+				<object-field
+					name="account"
+					object-type="shopifyAccount"/>
+
+				<text-field
+					name="method"/>
+
+				<text-field
+					name="path"/>
+
+				<yes-no-field
+					name="success"/>
+
+				<text-area-field
+					name="request"/>
+
+				<text-area-field
+					name="response"/>
+
+				<text-area-field
+					name="log"/>
+
+			</columns>
+
+		</form>
+
+	</forms>
+
+</console-module>
