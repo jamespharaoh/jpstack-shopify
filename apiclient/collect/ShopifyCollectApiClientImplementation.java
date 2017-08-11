@@ -4,6 +4,8 @@ import static wbs.utils.collection.CollectionUtils.collectionSize;
 import static wbs.utils.etc.Misc.lessThan;
 import static wbs.utils.etc.TypeUtils.genericCastUnchecked;
 
+import java.util.List;
+
 import com.google.common.collect.ImmutableList;
 
 import lombok.NonNull;
@@ -52,7 +54,7 @@ class ShopifyCollectApiClientImplementation
 
 	@Override
 	public
-	ShopifyCollectListResponse listAll (
+	List <ShopifyCollectResponse> listAll (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials) {
 
@@ -115,12 +117,7 @@ class ShopifyCollectApiClientImplementation
 
 			}
 
-			return new ShopifyCollectListResponse ()
-
-				.collects (
-					builder.build ())
-
-			;
+			return builder.build ();
 
 		}
 
