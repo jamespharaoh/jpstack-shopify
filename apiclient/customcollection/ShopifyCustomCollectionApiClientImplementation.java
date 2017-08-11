@@ -63,7 +63,8 @@ class ShopifyCustomCollectionApiClientImplementation
 	public
 	List <ShopifyCustomCollectionResponse> listAll (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull ShopifyApiClientCredentials credentials) {
+			@NonNull ShopifyApiClientCredentials credentials)
+		throws InterruptedException {
 
 		try (
 
@@ -133,7 +134,8 @@ class ShopifyCustomCollectionApiClientImplementation
 	public
 	List <Long> listAllIds (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull ShopifyApiClientCredentials credentials) {
+			@NonNull ShopifyApiClientCredentials credentials)
+		throws InterruptedException {
 
 		try (
 
@@ -210,7 +212,8 @@ class ShopifyCustomCollectionApiClientImplementation
 	Optional <ShopifyCustomCollectionResponse> get (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Long id) {
+			@NonNull Long id)
+		throws InterruptedException {
 
 		try (
 
@@ -260,7 +263,8 @@ class ShopifyCustomCollectionApiClientImplementation
 	ShopifyCustomCollectionResponse create (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull ShopifyCustomCollectionRequest collection) {
+			@NonNull ShopifyCustomCollectionRequest collection)
+		throws InterruptedException {
 
 		try (
 
@@ -306,7 +310,8 @@ class ShopifyCustomCollectionApiClientImplementation
 	ShopifyCustomCollectionResponse update (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull ShopifyCustomCollectionRequest collection) {
+			@NonNull ShopifyCustomCollectionRequest collection)
+		throws InterruptedException {
 
 		try (
 
@@ -347,7 +352,8 @@ class ShopifyCustomCollectionApiClientImplementation
 	void remove (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Long id) {
+			@NonNull Long id)
+		throws InterruptedException {
 
 		try (
 

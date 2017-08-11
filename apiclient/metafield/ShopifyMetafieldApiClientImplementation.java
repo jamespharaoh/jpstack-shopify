@@ -55,7 +55,8 @@ class ShopifyMetafieldApiClientImplementation
 	public
 	List <ShopifyMetafieldResponse> listAll (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull ShopifyApiClientCredentials credentials) {
+			@NonNull ShopifyApiClientCredentials credentials)
+		throws InterruptedException {
 
 		try (
 
@@ -128,7 +129,8 @@ class ShopifyMetafieldApiClientImplementation
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
 			@NonNull ShopifyMetafieldOwnerResource ownerResource,
-			@NonNull Long ownerId) {
+			@NonNull Long ownerId)
+		throws InterruptedException {
 
 		try (
 
@@ -206,7 +208,8 @@ class ShopifyMetafieldApiClientImplementation
 	ShopifyMetafieldResponse create (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull ShopifyMetafieldRequest request) {
+			@NonNull ShopifyMetafieldRequest request)
+		throws InterruptedException {
 
 		try (
 
@@ -251,7 +254,8 @@ class ShopifyMetafieldApiClientImplementation
 	ShopifyMetafieldResponse update (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull ShopifyMetafieldRequest metafield) {
+			@NonNull ShopifyMetafieldRequest metafield)
+		throws InterruptedException {
 
 		try (
 
@@ -297,7 +301,8 @@ class ShopifyMetafieldApiClientImplementation
 	void remove (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Long id) {
+			@NonNull Long id)
+		throws InterruptedException {
 
 		try (
 

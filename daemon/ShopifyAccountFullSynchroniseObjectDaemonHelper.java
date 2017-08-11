@@ -145,7 +145,8 @@ class ShopifyAccountFullSynchroniseObjectDaemonHelper
 	public
 	void processObject (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull Long accountId) {
+			@NonNull Long accountId)
+		throws InterruptedException {
 
 		try (
 

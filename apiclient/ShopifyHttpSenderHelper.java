@@ -68,6 +68,12 @@ class ShopifyHttpSenderHelper
 
 	@Override
 	public
+	Long tooManyRequestsMaxTries () {
+		return 10l;
+	}
+
+	@Override
+	public
 	HttpMethod method () {
 		return request.httpMethod ();
 	}

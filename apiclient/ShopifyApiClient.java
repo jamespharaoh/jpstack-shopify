@@ -19,7 +19,8 @@ interface ShopifyApiClient <
 	default
 	List <Response> listAll (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull ShopifyApiClientCredentials credentials) {
+			@NonNull ShopifyApiClientCredentials credentials)
+		throws InterruptedException {
 
 		throw unsupportedOperation (
 			this,
@@ -30,7 +31,8 @@ interface ShopifyApiClient <
 	default
 	List <Long> listAllIds (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull ShopifyApiClientCredentials credentials) {
+			@NonNull ShopifyApiClientCredentials credentials)
+		throws InterruptedException {
 
 		throw unsupportedOperation (
 			this,
@@ -42,7 +44,8 @@ interface ShopifyApiClient <
 	Optional <Response> get (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Long id) {
+			@NonNull Long id)
+		throws InterruptedException {
 
 		throw unsupportedOperation (
 			this,
@@ -54,7 +57,8 @@ interface ShopifyApiClient <
 	Response create (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Request product) {
+			@NonNull Request product)
+		throws InterruptedException {
 
 		throw unsupportedOperation (
 			this,
@@ -66,7 +70,8 @@ interface ShopifyApiClient <
 	Response update (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Request product) {
+			@NonNull Request product)
+		throws InterruptedException {
 
 		throw unsupportedOperation (
 			this,
@@ -78,7 +83,8 @@ interface ShopifyApiClient <
 	void remove (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Long id) {
+			@NonNull Long id)
+		throws InterruptedException {
 
 		throw unsupportedOperation (
 			this,

@@ -56,7 +56,8 @@ class ShopifyCollectApiClientImplementation
 	public
 	List <ShopifyCollectResponse> listAll (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull ShopifyApiClientCredentials credentials) {
+			@NonNull ShopifyApiClientCredentials credentials)
+		throws InterruptedException {
 
 		try (
 
@@ -128,7 +129,8 @@ class ShopifyCollectApiClientImplementation
 	ShopifyCollectResponse create (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull ShopifyCollectRequest request) {
+			@NonNull ShopifyCollectRequest request)
+		throws InterruptedException {
 
 		try (
 
@@ -174,7 +176,8 @@ class ShopifyCollectApiClientImplementation
 	ShopifyCollectResponse update (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull ShopifyCollectRequest request) {
+			@NonNull ShopifyCollectRequest request)
+		throws InterruptedException {
 
 		try (
 
@@ -220,7 +223,8 @@ class ShopifyCollectApiClientImplementation
 	void remove (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Long id) {
+			@NonNull Long id)
+		throws InterruptedException {
 
 		try (
 

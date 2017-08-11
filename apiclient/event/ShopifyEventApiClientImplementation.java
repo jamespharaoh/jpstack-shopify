@@ -61,7 +61,8 @@ class ShopifyEventApiClientImplementation
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
 			@NonNull Long eventId,
-			@NonNull Long maxItems) {
+			@NonNull Long maxItems)
+		throws InterruptedException {
 
 		try (
 

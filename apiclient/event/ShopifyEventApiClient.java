@@ -13,6 +13,7 @@ interface ShopifyEventApiClient {
 			TaskLogger parentTaskLogger,
 			ShopifyApiClientCredentials credentials,
 			Long eventId,
-			Long maxItems);
+			Long maxItems)
+		throws InterruptedException;
 
 }

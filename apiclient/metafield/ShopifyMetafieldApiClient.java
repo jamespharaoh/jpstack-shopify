@@ -19,6 +19,7 @@ interface ShopifyMetafieldApiClient
 			TaskLogger parentTaskLogger,
 			ShopifyApiClientCredentials credentials,
 			ShopifyMetafieldOwnerResource ownerResource,
-			Long ownerId);
+			Long ownerId)
+		throws InterruptedException;
 
 }

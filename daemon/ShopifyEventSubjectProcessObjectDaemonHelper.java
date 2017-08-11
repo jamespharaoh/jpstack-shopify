@@ -177,7 +177,8 @@ class ShopifyEventSubjectProcessObjectDaemonHelper
 	public
 	void processObject (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull Long eventSubjectId) {
+			@NonNull Long eventSubjectId)
+		throws InterruptedException {
 
 		try (
 
@@ -311,7 +312,8 @@ class ShopifyEventSubjectProcessObjectDaemonHelper
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull EventData eventData,
 			@NonNull ShopifyObjectHelper <RecordType> objectHelper,
-			@NonNull ShopifyApiClient <?, ResponseType> apiClient) {
+			@NonNull ShopifyApiClient <?, ResponseType> apiClient)
+		throws InterruptedException {
 
 		try (
 
@@ -479,7 +481,8 @@ class ShopifyEventSubjectProcessObjectDaemonHelper
 	private
 	void updateMetafieldRecords (
 			@NonNull TaskLogger parentTaskLogger,
-			@NonNull EventData eventData) {
+			@NonNull EventData eventData)
+		throws InterruptedException {
 
 		try (
 
@@ -512,7 +515,8 @@ class ShopifyEventSubjectProcessObjectDaemonHelper
 	void updateMetafieldRecordsLocal (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull EventData eventData,
-			@NonNull List <ShopifyMetafieldResponse> metafieldResponses) {
+			@NonNull List <ShopifyMetafieldResponse> metafieldResponses)
+		throws InterruptedException {
 
 		try (
 
