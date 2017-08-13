@@ -1,5 +1,5 @@
 <record
-	name="shopifyCustomCollection"
+	name="shopify-custom-collection"
 	type="major">
 
 	<dao-interfaces>
@@ -48,10 +48,10 @@
 
 		<parent-field
 			name="account"
-			type="shopifyAccount"/>
+			type="shopify-account"/>
 
 		<identity-integer-field
-			name="shopifyId"/>
+			name="shopify-id"/>
 
 		<!-- details -->
 
@@ -60,7 +60,7 @@
 		<!-- settings -->
 
 		<string-field
-			name="bodyHtml"
+			name="body-html"
 			nullable="yes"/>
 
 		<string-field
@@ -68,37 +68,37 @@
 			nullable="yes"/>
 
 		<timestamp-field
-			name="imageCreatedAt"
+			name="image-created-at"
 			column-type="postgresql"
 			nullable="yes"/>
 
 		<integer-field
-			name="imageHeight"
+			name="image-height"
 			nullable="yes"/>
 
 		<string-field
-			name="imageSrc"
+			name="image-src"
 			nullable="yes"/>
 
 		<integer-field
-			name="imageWidth"
+			name="image-width"
 			nullable="yes"/>
 
 		<timestamp-field
-			name="publishedAt"
+			name="published-at"
 			column-type="postgresql"
 			nullable="yes"/>
 
 		<string-field
-			name="publishedScope"
+			name="published-scope"
 			nullable="yes"/>
 
 		<string-field
-			name="sortOrder"
+			name="sort-order"
 			nullable="yes"/>
 
 		<string-field
-			name="templateSuffix"
+			name="template-suffix"
 			nullable="yes"/>
 
 		<string-field
@@ -106,7 +106,7 @@
 			nullable="yes"/>
 
 		<timestamp-field
-			name="updatedAt"
+			name="updated-at"
 			column-type="postgresql"
 			nullable="yes"/>
 

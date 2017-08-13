@@ -675,7 +675,7 @@ class ShopifyEventSubjectProcessObjectDaemonHelper
 			RecordSpec recordSpec =
 				mapItemForKeyRequired (
 					modelMetaLoader.recordSpecs (),
-					objectHelper.objectName ());
+					objectHelper.objectTypeHyphen ());
 
 			ShopifySynchronisationSpec synchronisationSpec =
 				iterableOnlyItemRequired (

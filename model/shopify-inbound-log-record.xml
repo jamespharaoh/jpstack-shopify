@@ -1,5 +1,5 @@
 <record
-	name="shopifyInboundLog"
+	name="shopify-inbound-log"
 	type="event">
 
 	<fields>
@@ -16,11 +16,11 @@
 
 		<reference-field
 			name="account"
-			type="shopifyAccount"
+			type="shopify-account"
 			nullable="yes"/>
 
 		<string-field
-			name="remoteIp"/>
+			name="remote-ip"/>
 
 		<yes-no-field
 			name="success"/>

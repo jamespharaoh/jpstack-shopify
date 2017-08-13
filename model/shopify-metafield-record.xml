@@ -1,5 +1,5 @@
 <record
-	name="shopifyMetafield"
+	name="shopify-metafield"
 	type="major">
 
 	<dao-interfaces>
@@ -48,10 +48,10 @@
 
 		<parent-field
 			name="account"
-			type="shopifyAccount"/>
+			type="shopify-account"/>
 
 		<identity-integer-field
-			name="shopifyId"/>
+			name="shopify-id"/>
 
 		<!-- details -->
 
@@ -60,7 +60,7 @@
 		<!-- data -->
 
 		<timestamp-field
-			name="createdAt"
+			name="created-at"
 			column-type="postgresql"
 			nullable="yes"/>
 
@@ -77,16 +77,16 @@
 			nullable="yes"/>
 
 		<integer-field
-			name="ownerId"
+			name="owner-id"
 			nullable="yes"/>
 
 		<enum-field
-			name="ownerResource"
-			type="shopifyMetafieldOwnerResource"
+			name="owner-resource"
+			type="shopify-metafield-owner-resource"
 			nullable="yes"/>
 
 		<timestamp-field
-			name="updatedAt"
+			name="updated-at"
 			column-type="postgresql"
 			nullable="yes"/>
 
@@ -95,7 +95,7 @@
 			nullable="yes"/>
 
 		<string-field
-			name="valueType"
+			name="value-type"
 			nullable="yes"/>
 
 	</fields>

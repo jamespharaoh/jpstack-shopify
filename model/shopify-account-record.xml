@@ -1,5 +1,5 @@
 <record
-	name="shopifyAccount"
+	name="shopify-account"
 	type="major">
 
 	<fields>
@@ -24,15 +24,15 @@
 		<!-- settings -->
 
 		<string-field
-			name="storeName"
+			name="store-name"
 			nullable="yes"/>
 
 		<string-field
-			name="privateAppName"
+			name="private-app-name"
 			nullable="yes"/>
 
 		<string-field
-			name="apiKey"
+			name="api-key"
 			nullable="yes"/>
 
 		<string-field
@@ -40,23 +40,23 @@
 			nullable="yes"/>
 
 		<string-field
-			name="sharedSecret"
+			name="shared-secret"
 			nullable="yes"/>
 
 		<!-- data -->
 
 		<integer-field
-			name="lastEventId"
+			name="last-event-id"
 			default="0"/>
 
 		<timestamp-field
-			name="nextFullSynchronise"
+			name="next-full-synchronise"
 			column-type="postgresql"/>
 
 		<!-- statistics -->
 
 		<integer-field
-			name="numEvents"
+			name="num-events"
 			default="0"/>
 
 	</fields>

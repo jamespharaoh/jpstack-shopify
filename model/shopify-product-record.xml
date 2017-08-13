@@ -1,5 +1,5 @@
 <record
-	name="shopifyProduct"
+	name="shopify-product"
 	type="common">
 
 	<dao-interfaces>
@@ -48,10 +48,10 @@
 
 		<parent-field
 			name="account"
-			type="shopifyAccount"/>
+			type="shopify-account"/>
 
 		<identity-integer-field
-			name="shopifyId"/>
+			name="shopify-id"/>
 
 		<!-- details -->
 
@@ -60,11 +60,11 @@
 		<!-- data -->
 
 		<string-field
-			name="bodyHtml"
+			name="body-html"
 			nullable="yes"/>
 
 		<timestamp-field
-			name="createdAt"
+			name="created-at"
 			column-type="postgresql"
 			nullable="yes"/>
 
@@ -73,20 +73,20 @@
 			nullable="yes"/>
 
 		<string-field
-			name="productType"
+			name="product-type"
 			nullable="yes"/>
 
 		<timestamp-field
-			name="publishedAt"
+			name="published-at"
 			column-type="postgresql"
 			nullable="yes"/>
 
 		<string-field
-			name="publishedScope"
+			name="published-scope"
 			nullable="yes"/>
 
 		<string-field
-			name="templateSuffix"
+			name="template-suffix"
 			nullable="yes"/>
 
 		<string-field
@@ -94,11 +94,11 @@
 			nullable="yes"/>
 
 		<string-field
-			name="metafieldsGlobalTitleTag"
+			name="metafields-global-title-tag"
 			nullable="yes"/>
 
 		<string-field
-			name="metafieldsGlobalDescriptionTag"
+			name="metafields-global-description-tag"
 			nullable="yes"/>
 
 		<string-field
@@ -106,7 +106,7 @@
 			nullable="yes"/>
 
 		<timestamp-field
-			name="updatedAt"
+			name="updated-at"
 			column-type="postgresql"
 			nullable="yes"/>
 

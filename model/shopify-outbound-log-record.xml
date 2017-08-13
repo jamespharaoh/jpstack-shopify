@@ -1,5 +1,5 @@
 <record
-	name="shopifyOutboundLog"
+	name="shopify-outbound-log"
 	type="event">
 
 	<fields>
@@ -16,7 +16,7 @@
 
 		<reference-field
 			name="account"
-			type="shopifyAccount"/>
+			type="shopify-account"/>
 
 		<string-field
 			name="method"/>

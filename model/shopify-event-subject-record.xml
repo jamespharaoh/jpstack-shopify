@@ -1,5 +1,5 @@
 <record
-	name="shopifyEventSubject"
+	name="shopify-event-subject"
 	type="event">
 
 	<fields>
@@ -12,14 +12,14 @@
 
 		<parent-field
 			name="account"
-			type="shopifyAccount"/>
+			type="shopify-account"/>
 
 		<identity-enum-field
-			name="subjectType"
-			type="shopifyEventSubjectType"/>
+			name="subject-type"
+			type="shopify-event-subject-type"/>
 
 		<identity-integer-field
-			name="subjectId"/>
+			name="subject-id"/>
 
 		<!-- state -->
 
@@ -32,21 +32,21 @@
 		<!-- statistics -->
 
 		<timestamp-field
-			name="firstEventTime"
+			name="first-event-time"
 			column-type="postgresql"
 			nullable="yes"/>
 
 		<timestamp-field
-			name="lastEventTime"
+			name="last-event-time"
 			column-type="postgresql"
 			nullable="yes"/>
 
 		<integer-field
-			name="numEvents"
+			name="num-events"
 			default="0"/>
 
 		<timestamp-field
-			name="lastProcessTime"
+			name="last-process-time"
 			column-type="postgresql"
 			nullable="yes"/>
 

@@ -10,16 +10,16 @@
 
 	<models>
 
-		<enum-type name="shopifyEventSubjectType"/>
-		<enum-type name="shopifyMetafieldOwnerResource"/>
+		<enum-type name="shopify-event-subject-type"/>
+		<enum-type name="shopify-metafield-owner-resource"/>
 
-		<model name="shopifyAccount"/>
-		<model name="shopifyCustomCollection"/>
-		<model name="shopifyEventSubject"/>
-		<model name="shopifyInboundLog"/>
-		<model name="shopifyMetafield"/>
-		<model name="shopifyOutboundLog"/>
-		<model name="shopifyProduct"/>
+		<model name="shopify-account"/>
+		<model name="shopify-custom-collection"/>
+		<model name="shopify-event-subject"/>
+		<model name="shopify-inbound-log"/>
+		<model name="shopify-metafield"/>
+		<model name="shopify-outbound-log"/>
+		<model name="shopify-product"/>
 
 	</models>
 
