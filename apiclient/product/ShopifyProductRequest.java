@@ -39,6 +39,10 @@ class ShopifyProductRequest
 		name = "product_type")
 	String productType;
 
+	@DataAttribute (
+		name = "published")
+	Boolean published;
+
 	@DataChildren (
 		childrenElement = "images")
 	List <ShopifyProductImageRequest> images;
