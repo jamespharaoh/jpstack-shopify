@@ -63,7 +63,7 @@ class ShopifyHttpSenderHelper
 	@Override
 	public
 	Duration defaultTimeout () {
-		return Duration.standardSeconds (30);
+		return Duration.standardSeconds (60l);
 	}
 
 	@Override
