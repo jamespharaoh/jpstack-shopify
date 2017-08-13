@@ -34,4 +34,6 @@ class ShopifyProductImageResponse {
 		name = "src")
 	String src;
 
+	Long mediaId;
+
 }

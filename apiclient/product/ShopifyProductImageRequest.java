@@ -24,4 +24,6 @@ class ShopifyProductImageRequest {
 		name = "src")
 	String src;
 
+	Long mediaId;
+
 }
