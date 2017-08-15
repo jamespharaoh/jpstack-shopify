@@ -173,53 +173,6 @@ class ShopifyCollectApiClientImplementation
 
 	@Override
 	public
-	ShopifyCollectResponse update (
-			@NonNull TaskLogger parentTaskLogger,
-			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull ShopifyCollectRequest request)
-		throws InterruptedException {
-
-		try (
-
-			OwnedTaskLogger taskLogger =
-				logContext.nestTaskLogger (
-					parentTaskLogger,
-					"update");
-
-		) {
-
-			ShopifyCollectUpdateResponse response =
-				genericCastUnchecked (
-					shopifyHttpSenderProvider.provide (
-						taskLogger)
-
-				.allInOne (
-					taskLogger,
-
-					new ShopifyCollectUpdateRequest ()
-
-						.httpCredentials (
-							credentials)
-
-						.collect (
-							request),
-
-					shopifyApiLogic.createOutboundLog (
-						taskLogger,
-						credentials.accountId ())
-
-				)
-
-			);
-
-			return response.collect ();
-
-		}
-
-	}
-
-	@Override
-	public
 	void remove (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,

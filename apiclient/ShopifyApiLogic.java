@@ -43,4 +43,7 @@ interface ShopifyApiLogic {
 
 	}
 
+	String normaliseHtml (
+			String source);
+
 }

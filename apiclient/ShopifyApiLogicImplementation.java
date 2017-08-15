@@ -35,6 +35,8 @@ import wbs.integrations.shopify.model.ShopifyAccountRec;
 import wbs.integrations.shopify.model.ShopifyMetafieldOwnerResource;
 import wbs.integrations.shopify.model.ShopifyOutboundLogObjectHelper;
 
+import wbs.utils.string.CodePointIterator;
+
 import wbs.web.utils.JsonUtils;
 
 @SingletonComponent ("shopifyApiLogic")
@@ -216,6 +218,154 @@ class ShopifyApiLogicImplementation
 			transaction.commit ();
 
 		}
+
+	}
+
+	@Override
+	public
+	String normaliseHtml (
+			@NonNull String source) {
+
+		CodePointIterator iterator =
+			new CodePointIterator (
+				source);
+
+		StringBuilder result =
+			new StringBuilder (
+				source.length () * 3 / 2);
+
+		while (iterator.hasNext ()) {
+
+			int character =
+				iterator.nextCodePoint ();
+
+			if (character == '<') {
+
+				normaliseHtmlElement (
+					iterator,
+					result);
+
+			} else {
+
+				result.appendCodePoint (
+					character);
+
+			}
+
+		}
+
+		return result.toString ();
+
+	}
+
+	// private implementation
+
+	private
+	void normaliseHtmlElement (
+			@NonNull CodePointIterator iterator,
+			@NonNull StringBuilder result) {
+
+		result.append ('<');
+
+		while (iterator.hasNext ()) {
+
+			int character =
+				iterator.nextCodePoint ();
+
+			if (character == '>') {
+
+				result.append ('>');
+
+				return;
+
+			} else if (character == '"') {
+
+				normaliseHtmlAttributeDoubleQuote (
+					iterator,
+					result);
+
+			} else if (character == '\'') {
+
+				normaliseHtmlAttributeSingleQuote (
+					iterator,
+					result);
+
+			} else {
+
+				result.appendCodePoint (
+					character);
+
+			}
+
+		}
+
+		throw new IllegalArgumentException ();
+
+	}
+
+	private
+	void normaliseHtmlAttributeDoubleQuote (
+			@NonNull CodePointIterator iterator,
+			@NonNull StringBuilder result) {
+
+		result.append (
+			'"');
+
+		while (iterator.hasNext ()) {
+
+			int character =
+				iterator.nextCodePoint ();
+
+			if (character == '"') {
+
+				result.append (
+					'"');
+
+				return;
+
+			} else {
+
+				result.appendCodePoint (
+					character);
+
+			}
+
+		}
+
+		throw new IllegalArgumentException ();
+
+	}
+
+	private
+	void normaliseHtmlAttributeSingleQuote (
+			@NonNull CodePointIterator iterator,
+			@NonNull StringBuilder result) {
+
+		result.append (
+			'"');
+
+		while (iterator.hasNext ()) {
+
+			int character =
+				iterator.nextCodePoint ();
+
+			if (character == '\'') {
+
+				result.append (
+					'"');
+
+				return;
+
+			} else {
+
+				result.appendCodePoint (
+					character);
+
+			}
+
+		}
+
+		throw new IllegalArgumentException ();
 
 	}
 
