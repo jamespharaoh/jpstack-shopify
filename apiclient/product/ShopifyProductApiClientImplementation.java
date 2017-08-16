@@ -383,7 +383,9 @@ class ShopifyProductApiClientImplementation
 
 				iterableForEach (
 					iterableZipRequired (
-						product.images (),
+						ifNull (
+							product.images (),
+							emptyList ()),
 						response.product.images ()),
 					(requestImage, responseImage) ->
 						responseImage.mediaId (
