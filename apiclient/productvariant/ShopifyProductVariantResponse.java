@@ -1,14 +1,17 @@
-package wbs.integrations.shopify.apiclient.product;
+package wbs.integrations.shopify.apiclient.productvariant;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import wbs.framework.data.annotations.DataAttribute;
 
+import wbs.integrations.shopify.apiclient.ShopifyApiResponseItem;
+
 @Accessors (fluent = true)
 @Data
 public
-class ShopifyProductVariantResponse {
+class ShopifyProductVariantResponse
+	implements ShopifyApiResponseItem {
 
 	// id
 

@@ -55,6 +55,10 @@
 					name="timestamp"
 					nullable="yes"/>
 
+				<text-field
+					name="path"
+					nullable="yes"/>
+
 				<yes-no-field
 					name="success"
 					nullable="yes"/>

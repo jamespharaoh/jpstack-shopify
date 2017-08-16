@@ -1,6 +1,7 @@
 package wbs.integrations.shopify.hibernate;
 
 import static wbs.utils.etc.NullUtils.isNotNull;
+import static wbs.utils.string.StringUtils.stringFormat;
 
 import java.util.List;
 
@@ -88,6 +89,32 @@ class ShopifyOutboundLogDaoHibernate
 							search.timestamp ().end ()));
 
 				}
+
+			}
+
+			if (
+				isNotNull (
+					search.method ())
+			) {
+
+				criteria.add (
+					Restrictions.eq (
+						"_outboundLog.method",
+						search.method ()));
+
+			}
+
+			if (
+				isNotNull (
+					search.path ())
+			) {
+
+				criteria.add (
+					Restrictions.ilike (
+						"_outboundLog.path",
+						stringFormat (
+							"%%%s%%",
+							search.path ())));
 
 			}
 

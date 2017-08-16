@@ -1,4 +1,4 @@
-package wbs.integrations.shopify.apiclient.product;
+package wbs.integrations.shopify.apiclient.productimage;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

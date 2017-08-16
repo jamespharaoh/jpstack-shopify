@@ -57,7 +57,7 @@ interface ShopifyApiClient <
 	Response create (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Request product)
+			@NonNull Request request)
 		throws InterruptedException {
 
 		throw unsupportedOperation (
@@ -70,7 +70,7 @@ interface ShopifyApiClient <
 	Response update (
 			@NonNull TaskLogger parentTaskLogger,
 			@NonNull ShopifyApiClientCredentials credentials,
-			@NonNull Request product)
+			@NonNull Request request)
 		throws InterruptedException {
 
 		throw unsupportedOperation (

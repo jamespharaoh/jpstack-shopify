@@ -11,6 +11,8 @@ import wbs.framework.data.annotations.DataClass;
 
 import wbs.integrations.shopify.apiclient.ShopifyApiRequestItem;
 import wbs.integrations.shopify.apiclient.metafield.ShopifyMetafieldRequest;
+import wbs.integrations.shopify.apiclient.productimage.ShopifyProductImageRequest;
+import wbs.integrations.shopify.apiclient.productvariant.ShopifyProductVariantRequest;
 
 @Accessors (fluent = true)
 @Data

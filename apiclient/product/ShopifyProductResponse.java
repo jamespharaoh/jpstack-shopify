@@ -11,6 +11,8 @@ import wbs.framework.data.annotations.DataAttribute;
 import wbs.framework.data.annotations.DataChildren;
 
 import wbs.integrations.shopify.apiclient.ShopifyApiResponseItem;
+import wbs.integrations.shopify.apiclient.productimage.ShopifyProductImageResponse;
+import wbs.integrations.shopify.apiclient.productvariant.ShopifyProductVariantResponse;
 
 @Accessors (fluent = true)
 @Data

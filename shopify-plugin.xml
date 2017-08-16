@@ -57,6 +57,7 @@
 		<component class="apiclient.event.ShopifyEventApiClientImplementation"/>
 		<component class="apiclient.metafield.ShopifyMetafieldApiClientImplementation"/>
 		<component class="apiclient.product.ShopifyProductApiClientImplementation"/>
+		<component class="apiclient.productvariant.ShopifyProductVariantApiClientImplementation"/>
 
 	</layer>
 

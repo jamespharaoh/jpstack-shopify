@@ -7,6 +7,8 @@ import lombok.experimental.Accessors;
 
 import wbs.utils.time.interval.TextualInterval;
 
+import wbs.web.misc.HttpMethod;
+
 @Accessors (fluent = true)
 @Data
 public
@@ -16,6 +18,9 @@ class ShopifyOutboundLogSearch
 	Long accountId;
 
 	TextualInterval timestamp;
+
+	HttpMethod method;
+	String path;
 
 	Boolean success;
 
