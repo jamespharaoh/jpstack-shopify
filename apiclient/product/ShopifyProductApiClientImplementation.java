@@ -2,11 +2,13 @@
 package wbs.integrations.shopify.apiclient.product;
 
 import static wbs.utils.collection.CollectionUtils.collectionSize;
+import static wbs.utils.collection.CollectionUtils.emptyList;
 import static wbs.utils.collection.CollectionUtils.singletonList;
 import static wbs.utils.collection.IterableUtils.iterableForEach;
 import static wbs.utils.collection.IterableUtils.iterableMap;
 import static wbs.utils.collection.IterableUtils.iterableZipRequired;
 import static wbs.utils.etc.Misc.lessThan;
+import static wbs.utils.etc.NullUtils.ifNull;
 import static wbs.utils.etc.NumberUtils.integerEqualSafe;
 import static wbs.utils.etc.OptionalUtils.optionalAbsent;
 import static wbs.utils.etc.OptionalUtils.optionalOf;
@@ -372,7 +374,9 @@ class ShopifyProductApiClientImplementation
 			if (
 				integerEqualSafe (
 					collectionSize (
-						product.images ()),
+						ifNull (
+							product.images (),
+							emptyList ())),
 					collectionSize (
 						response.product.images ()))
 			) {
