@@ -192,7 +192,7 @@ class ShopifyFixtureProvider
 								"name")))
 
 					.put (
-						"nextFullSynchronise",
+						"next-full-synchronise",
 						isoTimestampString (
 							transaction.now ()))
 
